@@ -12,36 +12,29 @@ route:
   group_wait: 30s
   group_interval: 5m
   repeat_interval: 3h
-  receiver: team
-
+  receiver: critical
   routes:
-    - match_re:
-        service: ^(kubernetes|k8s)$
-      receiver: infrastructure
+  - match:
+     severity: high
+     service: ^(kubernetes|k8s)$
+     receiver: high
+  - match:
+     security: true
+    receiver: critical
 
 inhibit_rules:
   - source_match:
-      severity: "critical"
+      severity: critical, high
     target_match:
       severity: "warning"
     equal: ["alertname", "cluster", "service"]
 
 receivers:
-  - name: "infrastructure"
+  - name: "critical"
     email_configs:
       - to: "oncall-critical@example.com"
         send_resolved: true
-
-inhibit_rules:
-  - source_match:
-      severity: "high"
-    target_match:
-      severity: "warning"
-    equal: ["alertname", "cluster", "service"]
-
-receivers:
-  - name: "infrastructure"
+  - name: "high"
     email_configs:
       - to: "oncall-high@example.com"
         send_resolved: true
-
