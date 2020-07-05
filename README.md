@@ -51,11 +51,11 @@ Para hacer que funcione necesitaremos:
 
 ## LINKS DE ACCESO A LAS APLICACIONES:
 
-Grafana:    http://localhost:3000/ -- Importaremos el dashboard MyPrometheusDashboard.json
-En caso de querer hacer uno de 0, deberemos indicar el datasource a conectar: en mi caso IP de Prometheus 
-            http://3.123.23.215:9090 y en Access, indicar Browser.
-Prometheus: http://3.123.23.215:9090/targets -- verificamos que conectamos y los endpoints estan up.
-            http://3.123.23.215:9090/alerts -- alertas configuradas en rules.yaml
+  - Grafana:    http://localhost:3000/ -- Importaremos el dashboard MyPrometheusDashboard.json
+                En caso de querer hacer uno de 0, deberemos indicar el datasource a conectar: en mi caso IP de Prometheus 
+                http://3.123.23.215:9090 y en Access, indicar Browser.
+  - Prometheus: http://3.123.23.215:9090/targets -- verificamos que conectamos y los endpoints estan up.
+                http://3.123.23.215:9090/alerts -- alertas configuradas en rules.yaml
 
   `
 
