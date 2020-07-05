@@ -22,27 +22,7 @@ groups:
         annotations:
           summary: "Pods are in status different to Running"
           description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} is not running state for more than 15 minutes."
-      
-      - alert: k8s_memory_usage_limit
-        expr: (sum(container_memory_usage_bytes) by (instance, name) / sum(container_spec_memory_limit_bytes) BY (instance, name) * 100) > 90
-        for: 5m
-        labels:
-          severity: high
-          team: "infrastructure"
-        annotations:
-          summary: "The container memory usage overcome 90% of its limit"
-          description: "Container {{ $labels.name }} in instance {{ $labels.instance }} is above 90%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
-      
-      - alert: k8s_Container_Cpu_Usage_Limit
-        expr: (sum(container_cpu_usage_seconds_total) BY (instance, name) * 100) > 90
-        for: 5m
-        labels:
-          severity: high
-          team: "Infraestructure"
-        annotations:
-        summary: "Container CPU usage (instance {{ $labels.instance }})"
-        description: "Container CPU usage is above 80%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
-      
+        
       - alert: Deployment_Replicas_Mismatch
         expr: kube_deployment_spec_replicas != kube_deployment_status_replicas_available
         for: 30m
@@ -51,3 +31,38 @@ groups:
         annotations:
           summary: "Kubernetes Deployment replicas mismatch (instance {{ $labels.instance }})"
           description: "Deployment Replicas mismatch\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+      
+      - alert: k8s_memory_usage_limit
+        expr:(sum(container_memory_working_set_bytes)by(container_label_io_kubernetes_pod_name)*100)/(sum(container_spec_memory_limit_bytes) by(container_label_io_kubernetes_pod_name)!=0)>80
+        for: 5m
+        labels:
+          severity: high
+          team: "infrastructure"
+        annotations:
+          summary: "The container memory usage overcome 80% of its limit"
+          description: "Container {{ $labels.name }} in instance {{ $labels.instance }} is above 90%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+    
+    #A PARTIR DE AQUÍ NO HE PODIDO HACELRO
+     
+       - alert: k8s_Container_Cpu_Usage_Limit
+        expr: (sum(container_cpu_usage_seconds_total) BY (instance, name) * 100) > 90
+        for: 5m
+        labels:
+          severity: high
+          team: "Infraestructure"
+        annotations:
+        summary: "The Container{{ $labels.name }} CPU usage (instance {{ $labels.instance }})"
+        description: "Container CPU usage is above 80%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+      
+      - alert: k8s_Container_Cpu_Low
+        expr: (sum(container_cpu_usage_seconds_total) BY (instance, name) * 100) < 90
+        for: 5m
+        labels:
+          severity: high
+          team: "Infraestructure"
+        annotations:
+        summary: "The Container{{ $labels.name }} CPU usage (instance {{ $labels.instance }})"
+        description: "Container CPU usage is lower than 50% requested\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+
+
