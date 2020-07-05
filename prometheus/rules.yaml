@@ -33,7 +33,7 @@ groups:
           description: "Deployment Replicas mismatch\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
       
       - alert: k8s_memory_usage_limit
-        expr:(sum(container_memory_working_set_bytes)by(container_label_io_kubernetes_pod_name)*100)/(sum(container_spec_memory_limit_bytes) by(container_label_io_kubernetes_pod_name)!=0)>80
+        expr: (sum(container_memory_working_set_bytes)by(container_label_io_kubernetes_pod_name)*100)/(sum(container_spec_memory_limit_bytes) by(container_label_io_kubernetes_pod_name)!=0)>80
         for: 5m
         labels:
           severity: high
