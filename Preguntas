@@ -13,10 +13,11 @@ Burn rate: Nos sirve para saber a que velocidad se nos agota el error badget, es
 
 
 3. EJEMPLO DE TRAZA DE PETICIÓN PARA ENVIO
-https://raw.githubusercontent.com/darroyote/prometheus/master/TRAZA.jpg
-https://github.com/darroyote/prometheus/blob/master/TRAZA.jpg
+https://raw.githubusercontent.com/darroyote/prometheus/master/assets/TRAZA.jpg
+https://github.com/darroyote/prometheus/blob/master/assets/TRAZA.jpg
 ![TRAZA](TRAZA.jpg)
-![Screenshot](./TRAZA.jpg)
+![Screenshot](https://github.com/darroyote/prometheus/blob/master/assets/TRAZA.jpg)
+![Screenshot](https://raw.githubusercontent.com/darroyote/prometheus/master/assets/TRAZA.jpg
 
 4. RESILENCIA WEB SERVICE CON PICO DE TRÁFICO
 El método de resilencia que utilizaría en este caso seria Adaptive LIFO + CODEL. 
