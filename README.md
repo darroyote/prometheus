@@ -14,9 +14,9 @@ Para hacer que funcione necesitaremos:
 ## ESTRUCTURA
 
 
-Grafana: Ejecutado en local
-Prometheus y Alertmanager en cluster k8s mediante docker-compose
-Cadvisor en k8s mediante svc y daemonset
+  - Grafana: Ejecutado en local
+  - Prometheus y Alertmanager en cluster k8s mediante docker-compose
+  - Cadvisor en k8s mediante svc y daemonset
 
 ## EJECUCIÓN
 
