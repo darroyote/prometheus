@@ -1,4 +1,4 @@
-# Práctica entorno de monitorización de Kubernetes con Prometheus, Grafana, Alermanager.
+# Práctica entorno de monitorización de Kubernetes con Prometheus, Grafana, Alertmanager.
 
 Para poder realizar la práctica he instalado un cluster K8S en 2 nodos EC2 de Ubuntu, configurando un master y un slave.
 
