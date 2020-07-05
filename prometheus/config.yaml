@@ -1,0 +1,88 @@
+global:
+  scrape_interval: 15s
+
+rule_files:
+  - rules.yaml
+
+alerting:
+  alertmanagers:
+    - scheme: http
+      static_configs:
+        - targets:
+            - "alertmanager:9093"
+
+scrape_configs:
+  - job_name: "prometheus"
+    metrics_path: /metrics
+    scheme: http
+    static_configs:
+            - targets: ["10.0.1.54:9090"]
+
+  - job_name: "kubernetes-exporter"
+    scheme: https
+    tls_config:
+      ca_file: ca-file.crt
+      insecure_skip_verify: true
+    bearer_token_file: bearer.token
+    kubernetes_sd_configs:
+      - role: pod
+        bearer_token_file: bearer.token
+        api_server: https://10.0.1.54:6443
+        tls_config:
+          ca_file: ca-file.crt
+          insecure_skip_verify: true
+    relabel_configs:
+      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+        action: keep
+        regex: true
+      - source_labels:
+          [
+            __meta_kubernetes_namespace,
+            __meta_kubernetes_pod_name,
+            __meta_kubernetes_pod_annotation_prometheus_io_port,
+            __meta_kubernetes_pod_annotation_prometheus_io_path,
+          ]
+        target_label: __metrics_path__
+        regex: (.+);(.+);(.+);(.+)
+        replacement: /api/v1/namespaces/$1/pods/$2:$3/proxy$4
+      - target_label: __address__
+        replacement: 10.0.1.54:6443
+      - action: labelmap
+        regex: __meta_kubernetes_pod_label_(.+)
+      - source_labels: [__meta_kubernetes_namespace]
+        action: replace
+        target_label: kubernetes_namespace
+      - source_labels: [__meta_kubernetes_pod_name]
+        action: replace
+        target_label: kubernetes_pod_name
+      - source_labels: [__meta_kubernetes_pod_node_name]
+        action: replace
+        target_label: instance
+
+  - job_name: "kubernetes-apiservers"
+    scheme: https
+    tls_config:
+      ca_file: ca-file.crt
+      insecure_skip_verify: true
+    bearer_token_file: bearer.token
+    kubernetes_sd_configs:
+      - role: endpoints
+        bearer_token_file: bearer.token
+        api_server: https://10.0.1.54:6443
+        tls_config:
+          ca_file: ca-file.crt
+          insecure_skip_verify: true
+    relabel_configs:
+      - source_labels:
+          [
+            __meta_kubernetes_namespace,
+            __meta_kubernetes_service_name,
+            __meta_kubernetes_endpoint_port_name,
+          ]
+        action: keep
+        regex: default;kubernetes;https
+      - source_labels: [__address__]
+        action: replace
+        target_label: instance
+      - target_label: __address__
+        replacement: 10.0.1.54:6443

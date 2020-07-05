@@ -1,0 +1,53 @@
+groups:
+  - name: endpoint
+    rules:
+      - alert: k8s_endpoint_unavailables
+        expr: kube_endpoint_address_not_ready == 1
+        for: 10m
+        labels:
+          severity: high
+          team: "Web"
+        annotations:
+          summary: "Endpoint with no adrees availables {{ $labels.endpoint }}"
+          description: "{{ $labels.instance }}appears without availables address for the {{ $labels.enpoint }} (current value: {{ $value }}s)"
+
+  - name: kubernetes
+    rules:
+      - alert: k8s_pods_no_running
+        expr: kube_pod_status_phase{phase!="Running"} == 1
+        for: 15m
+        labels:
+          severity: critical
+          team: "infrastructure"
+        annotations:
+          summary: "Pods are in status different to Running"
+          description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} is not running state for more than 15 minutes."
+      
+      - alert: k8s_memory_usage_limit
+        expr: (sum(container_memory_usage_bytes) by (instance, name) / sum(container_spec_memory_limit_bytes) BY (instance, name) * 100) > 90
+        for: 5m
+        labels:
+          severity: high
+          team: "infrastructure"
+        annotations:
+          summary: "The container memory usage overcome 90% of its limit"
+          description: "Container {{ $labels.name }} in instance {{ $labels.instance }} is above 90%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+      
+      - alert: k8s_Container_Cpu_Usage_Limit
+        expr: (sum(container_cpu_usage_seconds_total) BY (instance, name) * 100) > 90
+        for: 5m
+        labels:
+          severity: high
+          team: "Infraestructure"
+        annotations:
+        summary: "Container CPU usage (instance {{ $labels.instance }})"
+        description: "Container CPU usage is above 80%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+      
+      - alert: Deployment_Replicas_Mismatch
+        expr: kube_deployment_spec_replicas != kube_deployment_status_replicas_available
+        for: 30m
+        labels:
+          severity: high
+        annotations:
+          summary: "Kubernetes Deployment replicas mismatch (instance {{ $labels.instance }})"
+          description: "Deployment Replicas mismatch\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"

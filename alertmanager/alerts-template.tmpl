@@ -1,0 +1,13 @@
+{{ define "email.body" }}
+{{ range .Alerts -}}
+- {{ .Annotations.description }}
+{{ end }}
+{{ end }}
+
+{{ define "slack.title" }}Monitoring message: {{ .CommonLabels.alertname }}{{ end }}
+
+{{ define "slack.text" }}
+{{ range .Alerts -}}
+- {{ .Annotations.description }}
+{{ end }}
+{{ end }}
