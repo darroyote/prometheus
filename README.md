@@ -47,18 +47,18 @@ Para hacer que funcione necesitaremos:
     Debemos buscar: 
     server: https://10.0.1.54:6443 #Es la ip interna del master, pero para acceder a Promtheus se deberá utilizar la ip externa
     ```
-  - Ejecutamos docker-compose up para Prometheus y Alertmanager 
+  - Ejecutamos docker-compose up para Prometheus y Alertmanager. Ya podemos proceder con testeo de metricas, siempre que encontremos todos los enpoints en up.
 
 
 ## LINKS DE ACCESO A LAS APLICACIONES:
 
   - Grafana:    http://localhost:3000/ -- Importaremos el dashboard MyPrometheusDashboard.json
-                En caso de querer hacer uno de 0, deberemos indicar el datasource a conectar: en mi caso IP de Prometheus 
-                http://3.123.23.215:9090 y en Access, indicar Browser.
+                En caso de querer hacer uno de 0, deberemos indicar el datasource a conectar: en mi caso IP para acceder a Prometheus es 
+                http://3.123.23.215:9090 y en el campo "Access", deberemos indicar Browser.
   - Prometheus: http://3.123.23.215:9090/targets -- verificamos que conectamos y los endpoints estan up.
                 http://3.123.23.215:9090/alerts -- alertas configuradas en rules.yaml
 
-  `
+  PD: Me he dejado casi todas las alarmas de CPU y memoria de Prometheus
 
 ## BÚSQUEDA DE INFORMACIÓN
   
