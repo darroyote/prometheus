@@ -1,6 +1,6 @@
 global:
-        #smtp_smarthost: "localhost:25"
-        #smtp_from: "alertmanager@example.org"
+        smtp_smarthost: "localhost:25"
+        smtp_from: "alertmanager@example.org"
         slack_api_url: https://hooks.slack.com/services/TSQRKEHD2/B015VJWT468/pnc4zEcsPevwpay3d9U
 
         #templates:
