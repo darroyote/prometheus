@@ -16,7 +16,7 @@ Burn rate: Nos sirve para saber a que velocidad se nos agota el error badget, es
 https://raw.githubusercontent.com/darroyote/prometheus/master/TRAZA.jpg
 https://github.com/darroyote/prometheus/blob/master/TRAZA.jpg
 ![TRAZA](TRAZA.jpg)
-![Screenshot](https://github.com/darroyote/prometheus/blob/master/TRAZA.jpg)
+![Screenshot](./TRAZA.jpg)
 
 4. RESILENCIA WEB SERVICE CON PICO DE TRÁFICO
 El método de resilencia que utilizaría en este caso seria Adaptive LIFO + CODEL. 
