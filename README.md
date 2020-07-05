@@ -39,6 +39,7 @@ Para hacer que funcione necesitaremos:
     kubectl apply -f service.yaml 
     kubectl apply -f daemonset.yaml
     ```
+  - Realizamos lo mismo con los ficheros de kube-state-metrics. Aplicamos deployment.yaml y service.yaml
   - En el fichero config.ymal deberemos indicar nuestro apiserver. En caso de no saberlo:
   
     ```
